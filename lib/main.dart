@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_getx/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'views/content_page.dart';
 import 'firebase_options.dart';
@@ -18,7 +21,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    log('App routes : ${AppRoutes.routes}');
+    return GetMaterialApp(
       title: 'Flutter Demo',
       // debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -26,7 +30,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: Container(color: Colors.white,),
-      home: MyHomePage(),
+      // home: MyHomePage(),
+      initialRoute: '/',
+      getPages: AppRoutes.routes,
     );
   }
 }
