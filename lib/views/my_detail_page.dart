@@ -117,13 +117,14 @@ class _DetailPageState extends State<DetailPage> {
               height: height,
               child: Container(width: 80, height: 80,
                   color: Color(0xFFf9fbfc),
+                // color: Colors.red,
               ),
             ),
             Positioned(
               top: 170,
               left: 0,
               width: width,
-              height: 250,
+              height: 230,
               child: Container(
                 margin: const EdgeInsets.only(left: 25, right: 25),
                 width: width,
@@ -193,7 +194,7 @@ class _DetailPageState extends State<DetailPage> {
                                   Text(
                                     "name",
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      // fontSize: 18,
                                       color: Color(0xFF303030),
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -201,7 +202,7 @@ class _DetailPageState extends State<DetailPage> {
                                   Text(
                                     "Deadline",
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      // fontSize: 18,
                                       color: Color(0xFFacacac),
                                     ),
                                   ),
@@ -224,7 +225,7 @@ class _DetailPageState extends State<DetailPage> {
                                   Text(
                                     "499",
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      // fontSize: 18,
                                       color: Color(0xFF303030),
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -232,7 +233,7 @@ class _DetailPageState extends State<DetailPage> {
                                   Text(
                                     "Prize",
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      // fontSize: 18,
                                       color: Color(0xFFacacac),
                                     ),
                                   ),
@@ -252,7 +253,7 @@ class _DetailPageState extends State<DetailPage> {
                                   Text(
                                     "Top Level",
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      // fontSize: 18,
                                       color: Color(0xFF303030),
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -260,7 +261,7 @@ class _DetailPageState extends State<DetailPage> {
                                   Text(
                                     "Entry",
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      // fontSize: 18,
                                       color: Color(0xFFacacac),
                                     ),
                                   ),
@@ -276,7 +277,7 @@ class _DetailPageState extends State<DetailPage> {
               ),
             ),
             Positioned(
-              top: 480,
+              top: 450,
               left: 25,
               height: 50,
 
@@ -304,7 +305,7 @@ class _DetailPageState extends State<DetailPage> {
               children: [
                 for (int i = 0; i < 5; i++)
                   Positioned(
-                    top: 520,
+                    top: 500,
                     left: (20 + i * 35).toDouble(),
                     width: 50,
                     height: 50,
@@ -322,7 +323,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
             // //favourite
             Positioned(
-              top: 630,
+              top: 600,
               left: 25,
               child: Row(
                 children: [
