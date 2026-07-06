@@ -21,12 +21,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    log('App routes : ${AppRoutes.routes}');
+    // log('App routes : ${AppRoutes.routes}');
     return GetMaterialApp(
       title: 'Flutter Demo',
       // debugShowCheckedModeBanner: false,
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
       ),
       // home: Container(color: Colors.white,),

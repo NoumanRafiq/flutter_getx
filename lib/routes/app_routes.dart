@@ -11,6 +11,7 @@ class AppRoutes {
   static const String detailPage = '/detail-page';
   static const String contentPage = '/content-page';
 
+  // get the screens by names
   static String getInitial()=>initial;
   static String getHomePage()=>homePage;
   static String getDetailPage()=>detailPage;
