@@ -1,4 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'package:flutter_getx/controllers/data_controller.dart';
+import 'package:flutter_getx/controllers/fav_controller.dart';
+import 'package:flutter_getx/models/detail_data_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,19 +11,27 @@ import 'package:get/get.dart';
 import 'content_page.dart';
 import 'my_home_page.dart';
 
-class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key}) : super(key: key);
-
-  @override
-  _DetailPageState createState() => _DetailPageState();
-}
-
-class _DetailPageState extends State<DetailPage> {
+class DetailPage extends StatelessWidget {
+  DetailPage({Key? key}) : super(key: key);
+final DataController controller = Get.find<DataController>();
+final FavController favController = Get.put(FavController());
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     int _currentIndex = 0;
+
+    final String? id = Get.parameters['id'];
+
+    if(id==null || id.isEmpty || int.tryParse(id)==null){
+      return Material(
+        child: Center(child: Text('id is null')),
+      );
+    }
+
+    final index = int.parse(id!);
+    final dataModel = controller.detailDataList[index];
+    // final DetailsDataModel dataModel = Get.arguments as DetailsDataModel;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFc5e5f3),
@@ -59,7 +71,7 @@ class _DetailPageState extends State<DetailPage> {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage("img/background.jpg"),
+                        backgroundImage: AssetImage("${dataModel.img}"),
                       ),
                       SizedBox(width: 10),
                       Column(
@@ -67,7 +79,7 @@ class _DetailPageState extends State<DetailPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Name",
+                            "${dataModel.name}",
                             style: TextStyle(
                               color: Color(0xFF3b3f42),
                               fontSize: 18,
@@ -115,8 +127,10 @@ class _DetailPageState extends State<DetailPage> {
               left: 0,
               width: width,
               height: height,
-              child: Container(width: 80, height: 80,
-                  color: Color(0xFFf9fbfc),
+              child: Container(
+                width: 80,
+                height: 80,
+                color: Color(0xFFf9fbfc),
                 // color: Colors.red,
               ),
             ),
@@ -155,7 +169,7 @@ class _DetailPageState extends State<DetailPage> {
                         child: Row(
                           children: [
                             Text(
-                              "Title",
+                              "${dataModel.title}",
                               style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.w500,
@@ -165,20 +179,21 @@ class _DetailPageState extends State<DetailPage> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 15),
                       Container(
                         width: width,
                         child: Text(
-                          "Text",
+                          "${dataModel.text}",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 14,
                             color: Color(0xFFb8b8b8),
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 7),
                       Divider(thickness: 1.0),
-                      SizedBox(height: 10),
+                      SizedBox(height: 7),
+                      Spacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -292,7 +307,7 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                     children: [
                       TextSpan(
-                        text: "(11)",
+                        text: "(${controller.detailDataList.length})",
                         style: TextStyle(color: Color(0xFFfbc33e)),
                       ),
                     ],
@@ -303,7 +318,7 @@ class _DetailPageState extends State<DetailPage> {
             // //images
             Stack(
               children: [
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < controller.tempDataList.length; i++)
                   Positioned(
                     top: 500,
                     left: (20 + i * 35).toDouble(),
@@ -313,7 +328,7 @@ class _DetailPageState extends State<DetailPage> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         image: DecorationImage(
-                          image: AssetImage("img/background.jpg"),
+                          image: AssetImage("${controller.tempDataList[i].img}"),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -325,23 +340,40 @@ class _DetailPageState extends State<DetailPage> {
             Positioned(
               top: 600,
               left: 25,
-              child: Row(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xFFfbc33e),
+              child: Obx(()=> GestureDetector(
+                onTap: (){
+                  favController.setIsFav = !favController.isFav;
+                  log('isFav value: ${favController.isFav}');
+                },
+                child: Container(
+                  padding:.symmetric(horizontal: 6, vertical: 6) ,
+                  // width: double.maxFinite,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    border: Border.all(color: favController.isFav? Colors.red.shade100:Colors.transparent),
+                    borderRadius: .circular(22)
+                  ),
+                  child: Row(
+                      children: [
+                         Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: favController.isFav ? Colors.red.shade400: Color(0xFFfbc33e),
+                            ),
+                            child: Icon(Icons.favorite_border, color: Colors.white),
+                          ),
+
+                        SizedBox(width: 10),
+                        Text(
+                          "Add to favorite",
+                          style: TextStyle(color: favController.isFav?Colors.red:Color(0xFFfbc33e), fontSize: 18),
+                        ),
+                      ],
                     ),
-                    child: Icon(Icons.favorite_border, color: Colors.white),
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    "Add to favorite",
-                    style: TextStyle(color: Color(0xFFfbc33e), fontSize: 18),
-                  ),
-                ],
+                ),
+              ),
               ),
             ),
           ],
