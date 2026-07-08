@@ -14,12 +14,12 @@ class AppRoutes {
   // get the screens by names
   static String getInitial()=>initial;
   static String getHomePage()=>homePage;
-  static String getDetailPage()=>detailPage;
+  static String getDetailPage(int id)=>"$detailPage?id=$id";
   static String getContentPage()=>contentPage;
 
   static List<GetPage<String>> routes = [
     GetPage(name: initial, page: ()=>MyHomePage()),
-    GetPage(name: detailPage, page: ()=>DetailPage()),
     GetPage(name: contentPage, page: ()=>ContentPage()),
+    GetPage(name: detailPage, page: ()=>DetailPage()),
   ];
 }

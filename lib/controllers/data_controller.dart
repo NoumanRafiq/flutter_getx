@@ -10,6 +10,10 @@ class DataController extends GetxController {
 
   List<DetailsDataModel> get detailDataList => _detailDataList;
 
+  final RxList<DetailsDataModel> _tempDataList = <DetailsDataModel>[].obs;
+
+  List<DetailsDataModel> get tempDataList => _tempDataList;
+
   final RxBool _isLoading = true.obs;
 
   bool get isLoading => _isLoading.value;
@@ -27,8 +31,17 @@ class DataController extends GetxController {
     log('detail data response : ${detailData.toString()}');
     final List<dynamic> jsonData = jsonDecode(detailData);
 
-    _detailDataList.value = jsonData.map((e)=>DetailsDataModel.fromJson(json: e)).toList();
+    _detailDataList.value = jsonData
+        .map((e) => DetailsDataModel.fromJson(json: e))
+        .toList();
+  }
 
+  void updateList(int index) {
+    List<DetailsDataModel> sortedList = List.from(_detailDataList);
+    DetailsDataModel targetItem = sortedList[index];
+    sortedList.removeAt(index);
+    sortedList.insert(0, targetItem);
+    _tempDataList.assignAll(sortedList);
   }
 
   @override
